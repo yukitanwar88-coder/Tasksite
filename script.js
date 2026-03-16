@@ -42,7 +42,23 @@ alert("Ad watched +2₹")
 }
 function loadWallet(){
 document.getElementById("money").innerText=localStorage.getItem("wallet")
-}
+}import { getAuth, GoogleAuthProvider, signInWithPopup } 
+from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+
+const auth = getAuth();
+const provider = new GoogleAuthProvider();
+
+document.getElementById("googleLogin").addEventListener("click", function(){
+  signInWithPopup(auth, provider)
+  .then((result) => {
+    const user = result.user;
+    localStorage.setItem("user", user.email);
+    window.location="dashboard.html";
+  })
+  .catch((error) => {
+    alert(error.message);
+  });
+});
 function withdraw(){
 let amount=document.getElementById("amount").value
 let wallet=parseInt(localStorage.getItem("wallet"))
